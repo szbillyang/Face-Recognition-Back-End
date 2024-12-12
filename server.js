@@ -10,11 +10,6 @@ const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 const api = require('./controllers/api');
 
-
-app.listen(port, () => {
-  console.log(`app listening on port ${port}`)
-})
-
 const db = knex({
   client: 'pg',
   connection: {
@@ -48,3 +43,7 @@ app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcry
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
 app.post('/api/image', (req, res) => { api.handleAPI(req, res)});
 app.put('/image', (req, res) => { image.handleImage(req, res, db)})
+
+app.listen(port, () => {
+  console.log(`app listening on port ${port}`)
+})
