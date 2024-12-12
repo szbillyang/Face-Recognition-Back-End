@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
+const port = process.env.PORT || 4000;
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
@@ -10,14 +11,20 @@ const image = require('./controllers/image');
 const api = require('./controllers/api');
 
 
+app.listen(port, () => {
+  console.log(`app listening on port ${port}`)
+})
 
 const db = knex({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'bill',
-    password: '123',
-    database : 'face_recognition'
+    connectionString : process.env.DATABASE_URL,
+    ssl : {rejectUnauthorized: false},
+    host : process.env.DATABASE_HOST,
+    port : 5432,
+    user : process.env.DATABASE_USER,
+    password: process.env.DATABASE_PW,
+    database : process.env.DATABASE_DB
   }
 });
 
